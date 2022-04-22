@@ -1,6 +1,6 @@
 package repository
 
-import "jschool/repository/models"
+import "jschool/models"
 
 
 
@@ -8,4 +8,6 @@ import "jschool/repository/models"
 type DatabaseRepo interface {
 	 GetAllUsers() ([]models.User,error)
 	 CreateUser(models.User) (int,error)
+	 DeleteUser(id int) error
+	 UpdateUser(models.User) error
 }

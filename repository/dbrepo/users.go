@@ -2,7 +2,7 @@ package dbrepo
 
 import (
 	"context"
-	"jschool/repository/models"
+	"jschool/models"
 	"time"
 )
 
@@ -13,7 +13,7 @@ func (dbRepo *PostgressDbRepo) GetAllUsers() ([]models.User,error) {
 
 	users := []models.User{};
 	db := dbRepo.DB
-	query := `select name,email,phone from users`;
+	query := `select id,name,email from users`;
 	rows,err := db.QueryContext(ctx,query)
 	if(err != nil){
 		return users,err
@@ -21,7 +21,7 @@ func (dbRepo *PostgressDbRepo) GetAllUsers() ([]models.User,error) {
 
 	for rows.Next() {
 		user := models.User{}
-		err = rows.Scan(&user.Name,&user.Email,&user.Phone)
+		err = rows.Scan(&user.Id,&user.Name,&user.Email)
 		users = append(users, user)
 	}
 	
@@ -37,10 +37,10 @@ func (dbRepo *PostgressDbRepo) CreateUser(user models.User) (int,error) {
 	defer cancel()
 
 	
-	query := `insert into users(name,email,phone)
+	query := `insert into users(name,email,password)
 				values($1,$2,$3) returning id`;
 	db := dbRepo.DB
-	row := db.QueryRowContext(ctx,query,user.Name,user.Email,user.Phone);
+	row := db.QueryRowContext(ctx,query,user.Name,user.Email,user.Password);
 
 	var userId int;
 	err := row.Scan(&userId)
@@ -51,3 +51,24 @@ func (dbRepo *PostgressDbRepo) CreateUser(user models.User) (int,error) {
 
 }
 
+func (dbRepo * PostgressDbRepo) DeleteUser(id int) error {
+	ctx, cancel := context.WithTimeout(context.Background(),3 *time.Second)
+	defer cancel()
+
+	query:= `delete from users
+				where id = $1`;
+	_,err := dbRepo.DB.ExecContext(ctx,query,id);
+	return err;
+}
+
+func (dbRepo *PostgressDbRepo) UpdateUser(user models.User) error {
+	ctx, cancel := context.WithTimeout(context.Background(),3 *time.Second)
+	defer cancel()
+
+	query:= `update users 
+			 set name=$2,email=$3
+			 where id = $1`;
+	_,err := dbRepo.DB.ExecContext(ctx,query,user.Id,user.Name,user.Email);
+	return err;
+}
+ 
