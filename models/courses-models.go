@@ -16,10 +16,10 @@ type CourseComment struct {
 	Date time.Time  
 }
 
-type Couese struct {
-	Id int
-	Name string
-	Description string
-	Comments []CourseComment
-	Images []CourseImage
+type Course struct {
+	Id int				`json:"id"`
+	Name string			`json:"name"`
+	Description string	`json:"description"`
+	Comments []CourseComment	`json:"comments"`
+	Images []CourseImage		`json:"images"`
 }

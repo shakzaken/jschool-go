@@ -22,12 +22,13 @@ func (dbRepo *PostgressDbRepo) GetAllUsers() ([]models.User,error) {
 	for rows.Next() {
 		user := models.User{}
 		err = rows.Scan(&user.Id,&user.Name,&user.Email)
+		if(err != nil){
+			return users,err
+		}
 		users = append(users, user)
 	}
 	
-	if(err != nil){
-		return users,err
-	}
+	
 	return users,nil;
 
 }
