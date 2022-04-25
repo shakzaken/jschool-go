@@ -28,7 +28,6 @@ func (dbRepo *PostgressDbRepo) GetAllUsers() ([]models.User,error) {
 		users = append(users, user)
 	}
 	
-	
 	return users,nil;
 
 }

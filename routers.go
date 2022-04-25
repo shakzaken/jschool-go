@@ -22,5 +22,12 @@ func Routers(repo *handlers.AppRepository) *chi.Mux {
 	r.Put("/courses",repo.UpdateCourse)
 	r.Delete("/courses/{id}",repo.DeleteCourse)
 
+
+	r.Get("/degrees",repo.GetAllDegrees)
+	r.Get("/degrees/{id}",repo.GetDegree)
+	r.Post("/degrees",repo.CreateDegree)
+	r.Put("/degrees",repo.UpdateDegree)
+	r.Delete("/degrees/{id}",repo.DeleteDegree)
+
 	return r;
 }

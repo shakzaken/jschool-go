@@ -29,7 +29,6 @@ func (ar *AppRepository) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 		return;
 	}
 
-	w.Header().Set("Content-Type","application/json")
 	w.Write(out)
 }
 

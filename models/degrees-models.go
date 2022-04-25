@@ -18,7 +18,9 @@ type DegreeComment struct {
 }
 
 type Degree struct {
-	Id int
-	Name string
-	Description string
+	Id int			`json:"id"`
+	Name string		`json:"name"`
+	Description string	`json:"description"`
+	Comments []CourseComment	`json:"comments"`
+	Images []CourseImage		`json:"images"`
 }
