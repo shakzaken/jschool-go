@@ -3,17 +3,17 @@ package models
 import ("time")
 
 type CourseImage struct {
-	Id int
-	Image string
-	CourseId int
+	Id int			`json:"id"`
+	Image string	`json:"image"`
+	CourseId int	`json:"courseId"`
 }
 
 type CourseComment struct {
-	Id int
-	CourseId int
-	UserId int
-	Comment string
-	Date time.Time  
+	Id int				`json:"id"`
+	CourseId int		`json:"courseId"`
+	UserId int			`json:"userId"`
+	Comment string		`json:"comment"`
+	Date time.Time  	`json:"date"`
 }
 
 type Course struct {
