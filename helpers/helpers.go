@@ -18,3 +18,4 @@ func ServerError(w http.ResponseWriter,err error){
 	log.Println(trace)
 	http.Error(w,http.StatusText(http.StatusInternalServerError),http.StatusInternalServerError)
 }
+

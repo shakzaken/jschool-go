@@ -21,6 +21,10 @@ type DatabaseRepo interface {
 	 GetCourseComments(courseId int) ([]models.CourseComment,error)
 	 DeleteCourseComment(commentId int) (models.CourseComment,error)
 
+	 CreateCourseImage(imageBody string, courseId int) (models.CourseImage,error)
+	 GetCourseImages(courseId int) ([]models.CourseImage,error)
+	 DeleteCourseImage(imageId int) (models.CourseImage,error)
+
 	 GetAllDegrees() ([]models.Degree,error)
 	 GetDegree(id int) (models.Degree,error)
 	 CreateDegree(degree models.Degree) (models.Degree,error)

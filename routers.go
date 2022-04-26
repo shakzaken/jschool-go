@@ -26,6 +26,12 @@ func Routers(repo *handlers.AppRepository) *chi.Mux {
 	r.Post("/courses/comments",repo.CreateCourseComment)
 	r.Delete("/courses/comments/{id}",repo.DeleteCourseComment)
 
+	r.Get("/courses/images/{courseId}",repo.GetCourseImages)
+	r.Post("/courses/images/{courseId}",repo.CreateCourseImage)
+	r.Delete("/courses/images/{id}",repo.DeleteCourseImage)
+
+	r.Post("/courses/images",repo.CreateCourseImage)
+
 	r.Get("/degrees",repo.GetAllDegrees)
 	r.Get("/degrees/{id}",repo.GetDegree)
 	r.Post("/degrees",repo.CreateDegree)
