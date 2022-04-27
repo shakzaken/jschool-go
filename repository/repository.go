@@ -30,4 +30,12 @@ type DatabaseRepo interface {
 	 CreateDegree(degree models.Degree) (models.Degree,error)
 	 UpdateDegree(degree models.Degree) (models.Degree,error)
 	 DeleteDegree(id int) (models.Degree,error)
+
+	 CreateDegreeComment(comment models.DegreeComment) (models.DegreeComment, error)
+	 GetDegreeComments(degreeId int) ([]models.DegreeComment,error)
+	 DeleteDegreeComment(commentId int) (models.DegreeComment,error)
+
+	 CreateDegreeImage(image models.DegreeImage) (models.DegreeImage,error)
+	 GetDegreeImages(degreeId int) ([]models.DegreeImage,error)
+	 DeleteDegreeImage(imageId int) (models.DegreeImage,error)
 }

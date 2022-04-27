@@ -38,5 +38,13 @@ func Routers(repo *handlers.AppRepository) *chi.Mux {
 	r.Put("/degrees",repo.UpdateDegree)
 	r.Delete("/degrees/{id}",repo.DeleteDegree)
 
+	r.Get("/degrees/comments/{degreeId}",repo.GetDegreeComments)
+	r.Post("/degrees/comments",repo.CreateDegreeComment)
+	r.Delete("/degrees/comments/{id}",repo.DeleteDegreeComment)
+
+	r.Get("/degrees/images/{degreeId}",repo.GetDegreeImages)
+	r.Post("/degrees/images/{degreeId}",repo.CreateDegreeImage)
+	r.Delete("/degrees/images/{id}",repo.DeleteDegreeImage)
+
 	return r;
 }

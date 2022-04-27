@@ -13,7 +13,6 @@ type DegreeComment struct {
 	Comment string		`json:"comment"`
 	DegreeId int		`json:"degreeId"`
 	UserId int			`json:"userId"`
-	User User			`json:"user"`
 	Date time.Time		`json:"date"`
 
 }
