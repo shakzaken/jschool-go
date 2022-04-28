@@ -16,6 +16,10 @@ func Routers(repo *handlers.AppRepository) *chi.Mux {
 	r.Delete("/users/{id}",repo.DeleteUser)
 	r.Put("/users",repo.UpdateUser)
 
+	r.Get("/users/images/{userId}",repo.GetUserImages)
+	r.Post("/users/images/{userId}",repo.CreateUserImage)
+	r.Delete("/users/images/{id}",repo.DeleteUserImage)
+
 	r.Get("/courses",repo.GetAllCourses)
 	r.Get("/courses/{id}",repo.GetCourse)
 	r.Post("/courses",repo.CreateCourse)

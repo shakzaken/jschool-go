@@ -11,6 +11,10 @@ type DatabaseRepo interface {
 	 DeleteUser(id int) error
 	 UpdateUser(models.User) error
 
+	 CreateUserImage(image models.UserImage) (models.UserImage,error)
+	 GetUserImages(userId int) ([]models.UserImage,error)
+	 DeleteUserImage(id int) (models.UserImage,error)
+
 	 GetAllCourses() ([]models.Course,error)
 	 GetCourse(id int) (models.Course,error)
 	 CreateCourse(course models.Course) (models.Course,error)

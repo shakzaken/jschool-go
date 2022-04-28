@@ -6,3 +6,9 @@ type User struct {
 	Email string 	`json:"email"`
 	Password string `json:"password"`
 }
+
+type UserImage struct {
+	Id int  	`json:"id"`
+	Image string `json:"image"`
+	UserId int  `json:"userId"`
+}
