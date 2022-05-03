@@ -4,6 +4,8 @@ import (
 	"context"
 	"jschool/models"
 	"time"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (dbRepo *PostgressDbRepo) GetAllUsers() ([]models.User,error) {
@@ -27,27 +29,31 @@ func (dbRepo *PostgressDbRepo) GetAllUsers() ([]models.User,error) {
 		}
 		users = append(users, user)
 	}
-	
 	return users,nil;
-
 }
 
-func (dbRepo *PostgressDbRepo) CreateUser(user models.User) (int,error) {
+
+
+func (dbRepo *PostgressDbRepo) CreateUser(user models.User) (models.User,error) {
 	ctx, cancel := context.WithTimeout(context.Background(),3 *time.Second)
 	defer cancel()
 
+	hashedPassword,err := bcrypt.GenerateFromPassword([]byte(user.Password),14)
+	user.Password = ""
+	if(err != nil){
+		return user,err
+	}
 	
 	query := `insert into users(name,email,password)
 				values($1,$2,$3) returning id`;
 	db := dbRepo.DB
-	row := db.QueryRowContext(ctx,query,user.Name,user.Email,user.Password);
+	row := db.QueryRowContext(ctx,query,user.Name,user.Email,hashedPassword);
 
-	var userId int;
-	err := row.Scan(&userId)
+	err = row.Scan(&user.Id)
 	if(err != nil){
-		return userId ,err;
+		return user ,err;
 	}
-	return userId,nil;
+	return user,nil;
 
 }
 
@@ -70,5 +76,17 @@ func (dbRepo *PostgressDbRepo) UpdateUser(user models.User) error {
 			 where id = $1`;
 	_,err := dbRepo.DB.ExecContext(ctx,query,user.Id,user.Name,user.Email);
 	return err;
+}
+
+func (dbRepo *PostgressDbRepo) GetUserByEmail(email string) (models.User,error) {
+	ctx, cancel := context.WithTimeout(context.Background(),3 *time.Second)
+	defer cancel()
+	db:= dbRepo.DB
+
+	user := models.User{Email: email}
+	query := `select id,name,password from users where email = $1`
+	row := db.QueryRowContext(ctx,query,email)
+	err := row.Scan(&user.Id,&user.Name,&user.Password)
+	return user,err
 }
  

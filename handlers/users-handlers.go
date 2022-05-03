@@ -32,6 +32,7 @@ func (ar *AppRepository) GetAllUsers(w http.ResponseWriter, r *http.Request) {
 	w.Write(out)
 }
 
+
 func (ar *AppRepository) CreateUser(w http.ResponseWriter,r *http.Request){
 	data,err := ioutil.ReadAll(r.Body);
 	if(err!= nil){
@@ -51,16 +52,19 @@ func (ar *AppRepository) CreateUser(w http.ResponseWriter,r *http.Request){
 		return;
 	}
 
-	
-	_,err = ar.DB.CreateUser(user)
+	user,err = ar.DB.CreateUser(user)
 	if(err != nil){
 		helpers.ServerError(w,err);
 		return;
 	}
 	
-	w.Write([]byte("User created succesfuly"))
+	out,err := json.Marshal(user)
+	if(err != nil){
+		helpers.ServerError(w,err);
+		return;
+	}
+	w.Write(out)
 
-	
 }
 
 func (ar *AppRepository) DeleteUser(w http.ResponseWriter, r *http.Request){

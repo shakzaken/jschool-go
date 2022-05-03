@@ -7,9 +7,10 @@ import "jschool/models"
 
 type DatabaseRepo interface {
 	 GetAllUsers() ([]models.User,error)
-	 CreateUser(models.User) (int,error)
+	 CreateUser(models.User) (models.User,error)
 	 DeleteUser(id int) error
 	 UpdateUser(models.User) error
+	 GetUserByEmail(email string) (models.User,error)
 
 	 CreateUserImage(image models.UserImage) (models.UserImage,error)
 	 GetUserImages(userId int) ([]models.UserImage,error)
